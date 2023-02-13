@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Isidora's Book Repository</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+          crossorigin="anonymous">
+<body>
+<div class="container">
+    <div class="row">
+        <h1>Titles</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-3">
+            <a th:href="@{/titles/new}" class="btn btn-info btn-sm mb-3">Add Title</a>
+        </div>
+    </div>
+
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="thead-dark">
+        <tr>
+            <th>Title Name</th>
+            <th>Year Published</th>
+            <th>Author</th>
+            <th>Genre</th>
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="title: ${titles}">
+            <td th:text="${title.name}"></td>
+            <td th:text="${title.year}"></td>
+            <td th:text="${title.author}"></td>
+            <td th:text="${title.genre}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
