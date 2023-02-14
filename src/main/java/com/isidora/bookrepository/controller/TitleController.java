@@ -4,9 +4,7 @@ import com.isidora.bookrepository.domain.Title;
 import com.isidora.bookrepository.service.TitleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class TitleController {
@@ -39,6 +37,36 @@ public class TitleController {
     @PostMapping("/titles")
     public String saveTitle(@ModelAttribute("title") Title title) {
         titleService.saveTitle(title);
+        return "redirect:/titles";
+    }
+
+    // Edit Title
+    @GetMapping("/titles/edit/{isbn}")
+    public String editTitleForm(@PathVariable Long isbn, Model model) {
+        model.addAttribute("title", titleService.getTitleByIsbn(isbn));
+        return "edit_title";
+    }
+
+    @PostMapping("/titles/{isbn}")
+    public String updateTitle(@PathVariable Long isbn, @ModelAttribute("title") Title title, Model model) {
+
+        // get title by isbn from database
+        Title currentTitle = titleService.getTitleByIsbn(isbn);
+        currentTitle.setIsbn(title.getIsbn());
+        currentTitle.setName(title.getName());
+        currentTitle.setYear(title.getYear());
+        currentTitle.setGenre(title.getGenre());
+        currentTitle.setAuthor(title.getAuthor());
+
+        // save updated title
+        titleService.updateTitle(currentTitle);
+        return "redirect:/titles";
+    }
+
+    // delete title
+    @GetMapping("/titles/{isbn}")
+    public String deleteTitle(@PathVariable Long isbn, Model model) {
+        titleService.deleteTitleByIsbn(isbn);
         return "redirect:/titles";
     }
 }

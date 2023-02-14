@@ -27,5 +27,20 @@ public class TitleServiceImpl implements TitleService {
         return titleRepository.save(title);
     }
 
+    @Override
+    public Title updateTitle(Title title) {
+        return titleRepository.save(title);
+    }
+
+    @Override
+    public Title getTitleByIsbn(Long isbn) {
+        return titleRepository.findById(isbn).get();
+    }
+
+    @Override
+    public void deleteTitleByIsbn(Long isbn) {
+        titleRepository.deleteById(isbn);
+    }
+
 
 }
